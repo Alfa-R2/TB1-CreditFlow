@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:crediflow;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+jwt:
+  secret: test-secret-key-which-is-long-enough-for-hs256-0123456789-abcdef
+  expiration: 3600000
+
+app:
+  uploads:
+    dir: ./target/test-uploads
+  cors:
+    allowed-origins: http://localhost:4200
