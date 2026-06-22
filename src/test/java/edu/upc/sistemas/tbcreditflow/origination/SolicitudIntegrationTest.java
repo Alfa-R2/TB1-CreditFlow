@@ -7,6 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -100,5 +102,33 @@ class SolicitudIntegrationTest extends AbstractIntegrationTest {
                         .header(HttpHeaders.AUTHORIZATION, bearer(RolNombre.ASESOR)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray());
+    }
+
+    @Test
+    void hu04_consultarEstado_200() throws Exception {
+        var s = crearSolicitud(new BigDecimal("4200"), new BigDecimal("1750"),
+                new BigDecimal("30000"), 24);
+
+        mockMvc.perform(get("/api/solicitudes/{id}/estado", s.getId())
+                        .header(HttpHeaders.AUTHORIZATION, bearer(RolNombre.ASESOR)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.estado").value("REGISTRADA"));
+    }
+
+    @Test
+    void hu04_consultarEstado_404() throws Exception {
+        mockMvc.perform(get("/api/solicitudes/{id}/estado", 999999)
+                        .header(HttpHeaders.AUTHORIZATION, bearer(RolNombre.ASESOR)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void hu04_consultarEstado_rolNoAutorizado_403() throws Exception {
+        var s = crearSolicitud(new BigDecimal("4200"), new BigDecimal("1750"),
+                new BigDecimal("30000"), 24);
+
+        mockMvc.perform(get("/api/solicitudes/{id}/estado", s.getId())
+                        .header(HttpHeaders.AUTHORIZATION, bearer(RolNombre.GERENTE)))
+                .andExpect(status().isForbidden());
     }
 }

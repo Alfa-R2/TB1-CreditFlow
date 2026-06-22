@@ -45,6 +45,11 @@ public class SolicitudController {
         return ResponseEntity.ok(solicitudService.obtenerResponse(id));
     }
 
+    @GetMapping("/{id}/estado")
+    public ResponseEntity<EstadoResponse> consultarEstado(@PathVariable Long id) {
+        return ResponseEntity.ok(new EstadoResponse(solicitudService.consultarEstado(id)));
+    }
+
     @GetMapping
     public ResponseEntity<List<SolicitudResponse>> listar(
             @RequestParam(required = false) EstadoSolicitud estado,

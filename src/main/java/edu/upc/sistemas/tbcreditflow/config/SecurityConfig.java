@@ -55,11 +55,18 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/solicitudes").hasRole("ASESOR")
                         .requestMatchers(HttpMethod.GET, "/api/solicitudes").hasRole("ASESOR")
                         .requestMatchers(HttpMethod.POST, "/api/solicitudes/*/documentos").hasRole("ASESOR")
+                        .requestMatchers(HttpMethod.GET, "/api/solicitudes/*/estado").hasRole("ASESOR")
                         // Scoring (ANALISTA / COMITE)
                         .requestMatchers(HttpMethod.POST, "/api/solicitudes/*/evaluacion").hasRole("ANALISTA")
                         .requestMatchers(HttpMethod.GET, "/api/solicitudes/*/evaluacion").hasAnyRole("ANALISTA", "COMITE")
                         // Decisión (COMITE)
                         .requestMatchers(HttpMethod.POST, "/api/solicitudes/*/decision").hasRole("COMITE")
+                        // Parametrización de reglas (ADMIN_CREDITO) — HU07
+                        .requestMatchers("/api/reglas", "/api/reglas/**").hasRole("ADMIN_CREDITO")
+                        // Consulta de auditoría (AUDITOR, CUMPLIMIENTO) — HU10
+                        .requestMatchers(HttpMethod.GET, "/api/auditoria").hasAnyRole("AUDITOR", "CUMPLIMIENTO")
+                        // Reportes / indicadores (GERENTE) — HU13
+                        .requestMatchers(HttpMethod.GET, "/api/reportes/**").hasRole("GERENTE")
                         // Detalle de una solicitud: cualquier usuario autenticado
                         // (la matriz §6 no fija un rol para GET /api/solicitudes/{id})
                         .requestMatchers(HttpMethod.GET, "/api/solicitudes/*").authenticated()

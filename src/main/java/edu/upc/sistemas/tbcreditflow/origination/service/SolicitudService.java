@@ -70,6 +70,12 @@ public class SolicitudService {
         return SolicitudResponse.from(obtener(id));
     }
 
+    /** HU04: estado actual de la solicitud (404 si no existe). */
+    @Transactional(readOnly = true)
+    public EstadoSolicitud consultarEstado(Long id) {
+        return obtener(id).getEstado();
+    }
+
     /** Cliente asociado a la solicitud (lectura usada por el módulo de scoring). */
     @Transactional(readOnly = true)
     public Cliente obtenerCliente(Long clienteId) {

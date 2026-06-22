@@ -55,6 +55,17 @@ public class ReglaScoring {
         this.activa = activa;
     }
 
+    /** Actualiza todos los campos parametrizables (HU07, PUT). */
+    public void actualizar(String nombre, String parametro, OperadorRegla operador, BigDecimal umbral,
+                           Integer ponderacion, Boolean activa) {
+        this.nombre = nombre;
+        this.parametro = parametro;
+        this.operador = operador;
+        this.umbral = umbral;
+        this.ponderacion = ponderacion;
+        this.activa = activa;
+    }
+
     public Long getId() {
         return id;
     }

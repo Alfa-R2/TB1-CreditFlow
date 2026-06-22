@@ -19,4 +19,6 @@ public interface SolicitudRepository extends JpaRepository<Solicitud, Long> {
             """)
     List<Solicitud> buscar(@Param("estado") EstadoSolicitud estado,
                            @Param("clienteId") Long clienteId);
+
+    long countByEstado(EstadoSolicitud estado);
 }
