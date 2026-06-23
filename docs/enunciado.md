@@ -1,0 +1,4 @@
+* *Entidad Financiera o de Créditos Consumo (Escala Corporativa):* Para evaluar si otorgan un préstamo, los asesores comerciales recopilan manualmente boletas de pago y estados financieros impresos que envían por correo a un comité central, el cual evalúa los riesgos cruzando datos manualmente en plantillas internas.
+* Servicio de Solicitudes (Origination): Recibe y digitaliza los datos básicos del cliente y la postulación al crédito.
+* Servicio de Evaluación de Riesgos (Scoring): Procesa reglas de negocio automáticas para calcular la capacidad de pago y el nivel de riesgo del solicitante.
+* Servicio de Auditoría y Cumplimiento: Mantiene un registro inmutable y aislado de las aprobaciones para auditorías regulatorias de seguridad.
