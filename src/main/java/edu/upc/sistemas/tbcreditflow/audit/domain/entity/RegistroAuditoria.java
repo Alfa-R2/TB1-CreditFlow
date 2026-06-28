@@ -13,9 +13,11 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 /**
- * Registro de auditoría <b>append-only</b> (§4.6). No tiene setters de negocio: una vez creado no
- * se modifica. El {@code hashIntegridad} encadenado ({@link #sellar(String)}) lo asigna el servicio
- * durante la creación, una sola vez, cuando ya se conoce el {@code id} generado.
+ * Registro de auditoría <b>append-only</b> (§4.6). Módulo <b>aislado</b> (§2): referencia la
+ * solicitud solo por su {@code solicitudId} (Long), sin asociación JPA a origination, para no
+ * adquirir dependencias salientes. No tiene setters de negocio: una vez creado no se modifica. El
+ * {@code hashIntegridad} encadenado ({@link #sellar(String)}) lo asigna el servicio durante la
+ * creación, una sola vez, cuando ya se conoce el {@code id} generado.
  */
 @Entity
 @Table(name = "registro_auditoria")

@@ -50,7 +50,7 @@ public class ScoringService {
                     "La solicitud no está en estado REGISTRADA (estado actual: " + solicitud.getEstado() + ")");
         }
 
-        Cliente cliente = solicitudService.obtenerCliente(solicitud.getClienteId());
+        Cliente cliente = solicitud.getCliente();
         validarDatos(cliente);
 
         List<ReglaScoring> reglas = reglaScoringRepository.findByActivaTrue();
@@ -62,7 +62,7 @@ public class ScoringService {
                 reglas);
 
         EvaluacionRiesgo evaluacion = new EvaluacionRiesgo(
-                solicitudId,
+                solicitud,
                 resultado.capacidadPago(),
                 resultado.score(),
                 resultado.nivelRiesgo(),
@@ -76,7 +76,7 @@ public class ScoringService {
 
     @Transactional(readOnly = true)
     public EvaluacionRiesgo obtener(Long solicitudId) {
-        return evaluacionRepository.findBySolicitudId(solicitudId)
+        return evaluacionRepository.findBySolicitud_Id(solicitudId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "No existe evaluación para la solicitud: " + solicitudId));
     }

@@ -18,8 +18,8 @@ public record SolicitudResponse(
     public static SolicitudResponse from(Solicitud s) {
         return new SolicitudResponse(
                 s.getId(),
-                s.getClienteId(),
-                s.getAsesorId(),
+                s.getCliente().getId(),
+                s.getAsesor().getId(),
                 s.getMonto(),
                 s.getPlazoMeses(),
                 s.getEstado(),

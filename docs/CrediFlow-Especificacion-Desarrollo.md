@@ -132,8 +132,8 @@ RolNombre       : ASESOR, ANALISTA, ADMIN_CREDITO, COMITE, CUMPLIMIENTO, AUDITOR
 | campo | tipo | notas |
 |---|---|---|
 | id | Long | PK |
-| clienteId | Long | FK → Cliente, obligatorio |
-| asesorId | Long | FK → Usuario (quien registra) |
+| cliente | Cliente (`@ManyToOne`, LAZY) | obligatorio; columna FK `cliente_id` |
+| asesor | Usuario (`@ManyToOne`, LAZY) | quien registra; columna FK `asesor_id` |
 | monto | BigDecimal | > 0 |
 | plazoMeses | Integer | > 0 |
 | estado | EstadoSolicitud | default `REGISTRADA` |
@@ -143,7 +143,7 @@ RolNombre       : ASESOR, ANALISTA, ADMIN_CREDITO, COMITE, CUMPLIMIENTO, AUDITOR
 | campo | tipo | notas |
 |---|---|---|
 | id | Long | PK |
-| solicitudId | Long | FK → Solicitud |
+| solicitud | Solicitud (`@ManyToOne`, LAZY) | columna FK `solicitud_id` |
 | tipo | TipoDocumento | |
 | urlArchivo | String | ruta en disco |
 | hash | String(64) | SHA-256 del contenido |
@@ -153,7 +153,7 @@ RolNombre       : ASESOR, ANALISTA, ADMIN_CREDITO, COMITE, CUMPLIMIENTO, AUDITOR
 | campo | tipo | notas |
 |---|---|---|
 | id | Long | PK |
-| solicitudId | Long | FK → Solicitud, único |
+| solicitud | Solicitud (`@OneToOne`, LAZY) | columna FK `solicitud_id`, única (1 evaluación por solicitud) |
 | capacidadPago | BigDecimal | |
 | score | Integer | 0–100 |
 | nivelRiesgo | NivelRiesgo | |
@@ -175,7 +175,7 @@ RolNombre       : ASESOR, ANALISTA, ADMIN_CREDITO, COMITE, CUMPLIMIENTO, AUDITOR
 | campo | tipo | notas |
 |---|---|---|
 | id | Long | PK |
-| solicitudId | Long | FK → Solicitud |
+| solicitudId | Long | id de la Solicitud (sin asociación JPA — `audit` aislado, §2) |
 | accion | AccionAuditoria | APROBADA / RECHAZADA |
 | usuario | String | username del que decide (estable) |
 | fecha | LocalDateTime | |
@@ -191,15 +191,25 @@ RolNombre       : ASESOR, ANALISTA, ADMIN_CREDITO, COMITE, CUMPLIMIENTO, AUDITOR
 | id | Long | PK |
 | username | String | único |
 | passwordHash | String | BCrypt |
-| rol | Long | FK → Rol |
+| rol | Rol (`@ManyToOne`) | obligatorio; columna FK `rol_id` |
 | estado | EstadoUsuario | ACTIVO/INACTIVO |
 
 **Rol** (security): `id`, `nombre` (RolNombre, único), `descripcion`.
 
-### Relaciones (cardinalidad)
-- Rol 1—N Usuario · Cliente 1—N Solicitud · Usuario 1—N Solicitud (asesorId)
+### Relaciones (cardinalidad conceptual)
+> Cardinalidad **lógica del dominio**. No todas se materializan como FK/asociación JPA — el mapeo
+> real (y la excepción de auditoría, que referencia por id sin FK) está en la nota de más abajo.
+
+- Rol 1—N Usuario · Cliente 1—N Solicitud · Usuario 1—N Solicitud (asesor)
 - Solicitud 1—N Documento · Solicitud 1—(0..1) EvaluacionRiesgo · Solicitud 1—N RegistroAuditoria
 - Usuario 1—N RegistroAuditoria · ReglaScoring: sin FK (tabla de parámetros)
+
+> **Mapeo JPA de las relaciones.** Se mapean como asociaciones **`LAZY`** sobre las columnas FK
+> existentes (mismo esquema): `Solicitud`→`Cliente`/`Usuario` y `Documento`→`Solicitud` (`@ManyToOne`),
+> `EvaluacionRiesgo`→`Solicitud` (`@OneToOne`), `Usuario`→`Rol` (`@ManyToOne`). **Excepción:**
+> `RegistroAuditoria` referencia la solicitud solo por `solicitudId` (Long, sin asociación) para
+> mantener `audit` **aislado** (§2). En las respuestas de la API (§5) estos vínculos se siguen
+> exponiendo como ids (`clienteId`, `solicitudId`, …).
 
 Diagrama de referencia: `docs/crediflow-er-light.png`.
 
@@ -432,9 +442,9 @@ docker build -t crediflow .
 > Para el desarrollador a cargo: marcar cada punto comprobándolo de forma objetiva.
 
 ### Arquitectura
-- [ ] Paquetes por módulo con 4 capas; controllers sin lógica de negocio.
-- [ ] Comunicación entre módulos por beans (sin llamadas HTTP internas).
-- [ ] Una sola BD; `audit` sin dependencias salientes a otros módulos.
+- [X] Paquetes por módulo con 4 capas; controllers sin lógica de negocio.
+- [X] Comunicación entre módulos por beans (sin llamadas HTTP internas).
+- [X] Una sola BD; `audit` sin dependencias salientes a otros módulos.
 
 ### Datos y bootstrap
 - [ ] Las 8 tablas existen con los campos exactos del §3 (incluido `operador` en ReglaScoring).

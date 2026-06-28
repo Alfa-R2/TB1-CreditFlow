@@ -18,7 +18,7 @@ public record EvaluacionResponse(
     public static EvaluacionResponse from(EvaluacionRiesgo e) {
         return new EvaluacionResponse(
                 e.getId(),
-                e.getSolicitudId(),
+                e.getSolicitud().getId(),
                 e.getCapacidadPago(),
                 e.getScore(),
                 e.getNivelRiesgo(),

@@ -13,6 +13,7 @@ import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import edu.upc.sistemas.tbcreditflow.origination.domain.dto.SolicitudResponse;
 import edu.upc.sistemas.tbcreditflow.origination.repository.ClienteRepository;
 import edu.upc.sistemas.tbcreditflow.origination.repository.SolicitudRepository;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Usuario;
 import edu.upc.sistemas.tbcreditflow.security.service.UsuarioService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,9 +47,9 @@ public class SolicitudService {
     @Transactional
     public SolicitudResponse crear(CrearSolicitudRequest request) {
         Cliente cliente = obtenerOReutilizarCliente(request.cliente());
-        Long asesorId = usuarioService.currentUsuario().getId();
+        Usuario asesor = usuarioService.currentUsuario();
         Solicitud solicitud = new Solicitud(
-                cliente.getId(), asesorId, request.monto(), request.plazoMeses(), LocalDateTime.now());
+                cliente, asesor, request.monto(), request.plazoMeses(), LocalDateTime.now());
         return SolicitudResponse.from(solicitudRepository.save(solicitud));
     }
 
@@ -74,13 +75,6 @@ public class SolicitudService {
     @Transactional(readOnly = true)
     public EstadoSolicitud consultarEstado(Long id) {
         return obtener(id).getEstado();
-    }
-
-    /** Cliente asociado a la solicitud (lectura usada por el módulo de scoring). */
-    @Transactional(readOnly = true)
-    public Cliente obtenerCliente(Long clienteId) {
-        return clienteRepository.findById(clienteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado: " + clienteId));
     }
 
     @Transactional(readOnly = true)

@@ -60,14 +60,20 @@ public abstract class AbstractIntegrationTest {
     @Autowired
     protected SolicitudRepository solicitudRepository;
 
-    /** Crea (si no existe) un usuario para el rol indicado y devuelve su header Authorization. */
-    protected String bearer(RolNombre rolNombre) {
+    /** Crea (si no existe) un usuario para el rol indicado y lo devuelve. */
+    protected Usuario usuarioDeRol(RolNombre rolNombre) {
         String username = "user_" + rolNombre.name();
-        if (!usuarioRepository.existsByUsername(username)) {
+        return usuarioRepository.findByUsername(username).orElseGet(() -> {
             Rol rol = rolRepository.findByNombre(rolNombre).orElseThrow();
-            usuarioRepository.save(new Usuario(username, passwordEncoder.encode("pass"), rol, EstadoUsuario.ACTIVO));
-        }
-        return "Bearer " + jwtService.generateToken(username, rolNombre.name());
+            return usuarioRepository.save(
+                    new Usuario(username, passwordEncoder.encode("pass"), rol, EstadoUsuario.ACTIVO));
+        });
+    }
+
+    /** Header Authorization con un JWT válido para el rol indicado. */
+    protected String bearer(RolNombre rolNombre) {
+        usuarioDeRol(rolNombre);
+        return "Bearer " + jwtService.generateToken("user_" + rolNombre.name(), rolNombre.name());
     }
 
     /** Crea un cliente + solicitud en estado REGISTRADA directamente, para preparar escenarios. */
@@ -75,8 +81,9 @@ public abstract class AbstractIntegrationTest {
         String numDoc = "DOC" + SECUENCIA.incrementAndGet();
         Cliente cliente = clienteRepository.save(
                 new Cliente(TipoDoc.DNI, numDoc, "Nombre", "Apellido", ingreso, deudas));
+        Usuario asesor = usuarioDeRol(RolNombre.ASESOR);
         return solicitudRepository.save(
-                new Solicitud(cliente.getId(), 1L, monto, plazoMeses, LocalDateTime.now()));
+                new Solicitud(cliente, asesor, monto, plazoMeses, LocalDateTime.now()));
     }
 
     /** Extrae el campo numérico {@code $.id} del cuerpo JSON de una respuesta. */

@@ -24,7 +24,7 @@ En este proyecto, muchos DTOs estan implementados como `record`.
 Archivo:
 
 ```text
-src/main/java/edu/upc/sistemas/tbcreditflow/security/domain/LoginRequest.java
+src/main/java/edu/upc/sistemas/tbcreditflow/security/domain/dto/LoginRequest.java
 ```
 
 Codigo:
@@ -58,7 +58,7 @@ public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest requ
 Archivo:
 
 ```text
-src/main/java/edu/upc/sistemas/tbcreditflow/security/domain/TokenResponse.java
+src/main/java/edu/upc/sistemas/tbcreditflow/security/domain/dto/TokenResponse.java
 ```
 
 Codigo:
@@ -122,7 +122,7 @@ Las entities del proyecto usan clases normales.
 Ejemplo:
 
 ```text
-src/main/java/edu/upc/sistemas/tbcreditflow/origination/domain/Solicitud.java
+src/main/java/edu/upc/sistemas/tbcreditflow/origination/domain/entity/Solicitud.java
 ```
 
 Codigo:
@@ -183,18 +183,18 @@ Filtro Spring Security       -> class
 Algunos ejemplos:
 
 ```text
-security/domain/LoginRequest.java
-security/domain/TokenResponse.java
-origination/domain/CrearSolicitudRequest.java
-origination/domain/ClienteRequest.java
-origination/domain/DecisionRequest.java
-origination/domain/SolicitudResponse.java
-origination/domain/DocumentoResponse.java
-origination/domain/EstadoResponse.java
-scoring/domain/ReglaScoringRequest.java
-scoring/domain/ReglaScoringResponse.java
-scoring/domain/EvaluacionResponse.java
-audit/domain/RegistroAuditoriaResponse.java
+security/domain/dto/LoginRequest.java
+security/domain/dto/TokenResponse.java
+origination/domain/dto/CrearSolicitudRequest.java
+origination/domain/dto/ClienteRequest.java
+origination/domain/dto/DecisionRequest.java
+origination/domain/dto/SolicitudResponse.java
+origination/domain/dto/DocumentoResponse.java
+origination/domain/dto/EstadoResponse.java
+scoring/domain/dto/ReglaScoringRequest.java
+scoring/domain/dto/ReglaScoringResponse.java
+scoring/domain/dto/EvaluacionResponse.java
+audit/domain/dto/RegistroAuditoriaResponse.java
 reporting/domain/ReporteIndicadores.java
 ```
 
@@ -203,14 +203,14 @@ reporting/domain/ReporteIndicadores.java
 Algunos ejemplos:
 
 ```text
-security/domain/Usuario.java
-security/domain/Rol.java
-origination/domain/Cliente.java
-origination/domain/Solicitud.java
-origination/domain/Documento.java
-scoring/domain/ReglaScoring.java
-scoring/domain/EvaluacionRiesgo.java
-audit/domain/RegistroAuditoria.java
+security/domain/entity/Usuario.java
+security/domain/entity/Rol.java
+origination/domain/entity/Cliente.java
+origination/domain/entity/Solicitud.java
+origination/domain/entity/Documento.java
+scoring/domain/entity/ReglaScoring.java
+scoring/domain/entity/EvaluacionRiesgo.java
+audit/domain/entity/RegistroAuditoria.java
 ```
 
 ## 10. Cuando NO usar record para un DTO

@@ -16,7 +16,7 @@ public record DocumentoResponse(
     public static DocumentoResponse from(Documento d) {
         return new DocumentoResponse(
                 d.getId(),
-                d.getSolicitudId(),
+                d.getSolicitud().getId(),
                 d.getTipo(),
                 d.getUrlArchivo(),
                 d.getHash(),

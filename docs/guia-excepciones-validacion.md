@@ -132,7 +132,7 @@ public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequest requ
 El DTO:
 
 ```text
-src/main/java/edu/upc/sistemas/tbcreditflow/security/domain/LoginRequest.java
+src/main/java/edu/upc/sistemas/tbcreditflow/security/domain/dto/LoginRequest.java
 ```
 
 ```java
@@ -177,7 +177,7 @@ aplicarian automaticamente al `@RequestBody`.
 Ejemplo real:
 
 ```text
-src/main/java/edu/upc/sistemas/tbcreditflow/origination/domain/CrearSolicitudRequest.java
+src/main/java/edu/upc/sistemas/tbcreditflow/origination/domain/dto/CrearSolicitudRequest.java
 ```
 
 ```java
@@ -201,7 +201,7 @@ Ademas entra a validar ClienteRequest.
 DTO anidado:
 
 ```text
-src/main/java/edu/upc/sistemas/tbcreditflow/origination/domain/ClienteRequest.java
+src/main/java/edu/upc/sistemas/tbcreditflow/origination/domain/dto/ClienteRequest.java
 ```
 
 ```java
@@ -269,7 +269,7 @@ tiene la dependencia:
 
 ## 8. Excepciones propias del proyecto
 
-Hay tres excepciones simples en `common/`:
+Hay tres excepciones simples en `common/exception/`:
 
 ```text
 BadRequestException

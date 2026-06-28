@@ -7,6 +7,8 @@ import edu.upc.sistemas.tbcreditflow.support.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /** HU09/HU11 — sellado encadenado de auditoría y verificación de la cadena. */
@@ -17,8 +19,13 @@ class AuditServiceTest extends AbstractIntegrationTest {
 
     @Test
     void registrosSeEncadenanYLaCadenaEsVerificable() {
-        RegistroAuditoria r1 = auditService.registrar(101L, AccionAuditoria.APROBADA, "comite_a");
-        RegistroAuditoria r2 = auditService.registrar(102L, AccionAuditoria.RECHAZADA, "comite_b");
+        var s1 = crearSolicitud(new BigDecimal("4200"), new BigDecimal("1000"),
+                new BigDecimal("30000"), 24);
+        var s2 = crearSolicitud(new BigDecimal("5200"), new BigDecimal("1500"),
+                new BigDecimal("40000"), 36);
+
+        RegistroAuditoria r1 = auditService.registrar(s1.getId(), AccionAuditoria.APROBADA, "comite_a");
+        RegistroAuditoria r2 = auditService.registrar(s2.getId(), AccionAuditoria.RECHAZADA, "comite_b");
 
         // primer registro: hashPrevio vacío; hash de 64 hex
         assertThat(r1.getHashPrevio()).isEmpty();

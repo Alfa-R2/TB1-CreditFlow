@@ -13,6 +13,7 @@ docs/guia-records-dtos.md
 docs/guia-swagger-openapi.md
 docs/guia-dataseeder.md
 docs/guia-excepciones-validacion.md
+docs/guia-relaciones-entities.md
 ```
 
 ## 1. Punto de entrada

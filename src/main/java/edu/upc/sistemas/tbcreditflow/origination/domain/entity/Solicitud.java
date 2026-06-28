@@ -1,13 +1,18 @@
 package edu.upc.sistemas.tbcreditflow.origination.domain.entity;
 
 import edu.upc.sistemas.tbcreditflow.origination.domain.EstadoSolicitud;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Usuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
@@ -21,11 +26,15 @@ public class Solicitud {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "cliente_id", nullable = false)
-    private Long clienteId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "cliente_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_solicitud_cliente"))
+    private Cliente cliente;
 
-    @Column(name = "asesor_id", nullable = false)
-    private Long asesorId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "asesor_id", nullable = false,
+            foreignKey = @ForeignKey(name = "fk_solicitud_asesor"))
+    private Usuario asesor;
 
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal monto;
@@ -43,10 +52,10 @@ public class Solicitud {
     protected Solicitud() {
     }
 
-    public Solicitud(Long clienteId, Long asesorId, BigDecimal monto, Integer plazoMeses,
+    public Solicitud(Cliente cliente, Usuario asesor, BigDecimal monto, Integer plazoMeses,
                      LocalDateTime fechaRegistro) {
-        this.clienteId = clienteId;
-        this.asesorId = asesorId;
+        this.cliente = cliente;
+        this.asesor = asesor;
         this.monto = monto;
         this.plazoMeses = plazoMeses;
         this.estado = EstadoSolicitud.REGISTRADA;
@@ -61,12 +70,12 @@ public class Solicitud {
         return id;
     }
 
-    public Long getClienteId() {
-        return clienteId;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public Long getAsesorId() {
-        return asesorId;
+    public Usuario getAsesor() {
+        return asesor;
     }
 
     public BigDecimal getMonto() {

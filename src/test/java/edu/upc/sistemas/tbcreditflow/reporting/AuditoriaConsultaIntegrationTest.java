@@ -47,7 +47,7 @@ class AuditoriaConsultaIntegrationTest extends AbstractIntegrationTest {
 
         // Solo el cliente de s1, dentro de un rango de fechas que incluye hoy
         mockMvc.perform(get("/api/auditoria")
-                        .param("clienteId", String.valueOf(s1.getClienteId()))
+                        .param("clienteId", String.valueOf(s1.getCliente().getId()))
                         .param("desde", "2000-01-01")
                         .param("hasta", "2999-12-31")
                         .header(HttpHeaders.AUTHORIZATION, bearer(RolNombre.CUMPLIMIENTO)))

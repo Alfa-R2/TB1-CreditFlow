@@ -14,7 +14,7 @@ public interface SolicitudRepository extends JpaRepository<Solicitud, Long> {
     @Query("""
             SELECT s FROM Solicitud s
             WHERE (:estado IS NULL OR s.estado = :estado)
-              AND (:clienteId IS NULL OR s.clienteId = :clienteId)
+              AND (:clienteId IS NULL OR s.cliente.id = :clienteId)
             ORDER BY s.id
             """)
     List<Solicitud> buscar(@Param("estado") EstadoSolicitud estado,

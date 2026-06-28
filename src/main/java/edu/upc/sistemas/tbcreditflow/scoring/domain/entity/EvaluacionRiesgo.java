@@ -1,21 +1,26 @@
 package edu.upc.sistemas.tbcreditflow.scoring.domain.entity;
 
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import edu.upc.sistemas.tbcreditflow.scoring.domain.NivelRiesgo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Resultado de la evaluación de riesgo de una solicitud (§3). {@code solicitudId} es único: una sola
- * evaluación vigente por solicitud.
+ * Resultado de la evaluación de riesgo de una solicitud (§3). Relación 1—1 con Solicitud
+ * ({@code solicitud_id} único: una sola evaluación vigente por solicitud).
  */
 @Entity
 @Table(name = "evaluacion_riesgo")
@@ -25,8 +30,10 @@ public class EvaluacionRiesgo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "solicitud_id", nullable = false, unique = true)
-    private Long solicitudId;
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "solicitud_id", nullable = false, unique = true,
+            foreignKey = @ForeignKey(name = "fk_evaluacion_solicitud"))
+    private Solicitud solicitud;
 
     @Column(name = "capacidad_pago", nullable = false, precision = 19, scale = 2)
     private BigDecimal capacidadPago;
@@ -47,9 +54,9 @@ public class EvaluacionRiesgo {
     protected EvaluacionRiesgo() {
     }
 
-    public EvaluacionRiesgo(Long solicitudId, BigDecimal capacidadPago, Integer score,
+    public EvaluacionRiesgo(Solicitud solicitud, BigDecimal capacidadPago, Integer score,
                             NivelRiesgo nivelRiesgo, String justificacion, LocalDateTime fecha) {
-        this.solicitudId = solicitudId;
+        this.solicitud = solicitud;
         this.capacidadPago = capacidadPago;
         this.score = score;
         this.nivelRiesgo = nivelRiesgo;
@@ -61,8 +68,8 @@ public class EvaluacionRiesgo {
         return id;
     }
 
-    public Long getSolicitudId() {
-        return solicitudId;
+    public Solicitud getSolicitud() {
+        return solicitud;
     }
 
     public BigDecimal getCapacidadPago() {

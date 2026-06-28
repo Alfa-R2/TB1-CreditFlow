@@ -3,6 +3,7 @@ package edu.upc.sistemas.tbcreditflow.origination.service;
 import edu.upc.sistemas.tbcreditflow.common.exception.BadRequestException;
 import edu.upc.sistemas.tbcreditflow.common.HashUtil;
 import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Documento;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import edu.upc.sistemas.tbcreditflow.origination.domain.dto.DocumentoResponse;
 import edu.upc.sistemas.tbcreditflow.origination.domain.TipoDocumento;
 import edu.upc.sistemas.tbcreditflow.origination.repository.DocumentoRepository;
@@ -45,7 +46,7 @@ public class DocumentoService {
     @Transactional
     public DocumentoResponse subir(Long solicitudId, TipoDocumento tipo, MultipartFile archivo) {
         // 404 si la solicitud no existe
-        solicitudService.obtener(solicitudId);
+        Solicitud solicitud = solicitudService.obtener(solicitudId);
 
         if (archivo == null || archivo.isEmpty()) {
             throw new BadRequestException("El archivo es obligatorio y no puede estar vacío");
@@ -59,7 +60,7 @@ public class DocumentoService {
         String hash = HashUtil.sha256(contenido);
         String rutaArchivo = guardarArchivo(solicitudId, archivo.getOriginalFilename(), contenido);
 
-        Documento documento = new Documento(solicitudId, tipo, rutaArchivo, hash, LocalDateTime.now());
+        Documento documento = new Documento(solicitud, tipo, rutaArchivo, hash, LocalDateTime.now());
         return DocumentoResponse.from(documentoRepository.save(documento));
     }
 
