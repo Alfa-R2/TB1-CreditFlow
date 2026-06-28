@@ -1,9 +1,9 @@
 package edu.upc.sistemas.tbcreditflow.security.service;
 
 import edu.upc.sistemas.tbcreditflow.security.domain.EstadoUsuario;
-import edu.upc.sistemas.tbcreditflow.security.domain.LoginRequest;
-import edu.upc.sistemas.tbcreditflow.security.domain.TokenResponse;
-import edu.upc.sistemas.tbcreditflow.security.domain.Usuario;
+import edu.upc.sistemas.tbcreditflow.security.domain.dto.LoginRequest;
+import edu.upc.sistemas.tbcreditflow.security.domain.dto.TokenResponse;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Usuario;
 import edu.upc.sistemas.tbcreditflow.security.repository.UsuarioRepository;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,10 +1,10 @@
 package edu.upc.sistemas.tbcreditflow.flujo;
 
 import edu.upc.sistemas.tbcreditflow.audit.domain.AccionAuditoria;
-import edu.upc.sistemas.tbcreditflow.audit.domain.RegistroAuditoria;
+import edu.upc.sistemas.tbcreditflow.audit.domain.entity.RegistroAuditoria;
 import edu.upc.sistemas.tbcreditflow.audit.repository.RegistroAuditoriaRepository;
 import edu.upc.sistemas.tbcreditflow.audit.service.AuditService;
-import edu.upc.sistemas.tbcreditflow.origination.domain.Solicitud;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import edu.upc.sistemas.tbcreditflow.scoring.service.ScoringService;
 import edu.upc.sistemas.tbcreditflow.security.domain.RolNombre;
 import edu.upc.sistemas.tbcreditflow.support.AbstractIntegrationTest;

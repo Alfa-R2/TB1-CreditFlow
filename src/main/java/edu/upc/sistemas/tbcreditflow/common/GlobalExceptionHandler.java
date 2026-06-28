@@ -1,5 +1,8 @@
 package edu.upc.sistemas.tbcreditflow.common;
 
+import edu.upc.sistemas.tbcreditflow.common.exception.BadRequestException;
+import edu.upc.sistemas.tbcreditflow.common.exception.ConflictException;
+import edu.upc.sistemas.tbcreditflow.common.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;

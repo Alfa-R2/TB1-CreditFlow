@@ -1,15 +1,15 @@
 package edu.upc.sistemas.tbcreditflow.scoring.service;
 
-import edu.upc.sistemas.tbcreditflow.common.BadRequestException;
-import edu.upc.sistemas.tbcreditflow.common.ConflictException;
-import edu.upc.sistemas.tbcreditflow.common.ResourceNotFoundException;
-import edu.upc.sistemas.tbcreditflow.origination.domain.Cliente;
+import edu.upc.sistemas.tbcreditflow.common.exception.BadRequestException;
+import edu.upc.sistemas.tbcreditflow.common.exception.ConflictException;
+import edu.upc.sistemas.tbcreditflow.common.exception.ResourceNotFoundException;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Cliente;
 import edu.upc.sistemas.tbcreditflow.origination.domain.EstadoSolicitud;
-import edu.upc.sistemas.tbcreditflow.origination.domain.Solicitud;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import edu.upc.sistemas.tbcreditflow.origination.service.SolicitudService;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.EvaluacionRiesgo;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ReglaScoring;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ResultadoEvaluacion;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.entity.EvaluacionRiesgo;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.entity.ReglaScoring;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.dto.ResultadoEvaluacion;
 import edu.upc.sistemas.tbcreditflow.scoring.repository.EvaluacionRiesgoRepository;
 import edu.upc.sistemas.tbcreditflow.scoring.repository.ReglaScoringRepository;
 import org.springframework.stereotype.Service;

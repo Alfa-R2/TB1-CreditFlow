@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.origination.repository;
 
-import edu.upc.sistemas.tbcreditflow.origination.domain.Documento;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Documento;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

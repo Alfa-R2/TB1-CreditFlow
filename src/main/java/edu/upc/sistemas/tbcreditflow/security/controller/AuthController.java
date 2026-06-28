@@ -1,7 +1,7 @@
 package edu.upc.sistemas.tbcreditflow.security.controller;
 
-import edu.upc.sistemas.tbcreditflow.security.domain.LoginRequest;
-import edu.upc.sistemas.tbcreditflow.security.domain.TokenResponse;
+import edu.upc.sistemas.tbcreditflow.security.domain.dto.LoginRequest;
+import edu.upc.sistemas.tbcreditflow.security.domain.dto.TokenResponse;
 import edu.upc.sistemas.tbcreditflow.security.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

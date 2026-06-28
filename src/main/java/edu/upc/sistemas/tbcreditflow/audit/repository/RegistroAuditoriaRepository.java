@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.audit.repository;
 
-import edu.upc.sistemas.tbcreditflow.audit.domain.RegistroAuditoria;
+import edu.upc.sistemas.tbcreditflow.audit.domain.entity.RegistroAuditoria;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;

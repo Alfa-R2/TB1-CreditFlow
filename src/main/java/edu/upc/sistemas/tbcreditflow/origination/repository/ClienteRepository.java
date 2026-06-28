@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.origination.repository;
 
-import edu.upc.sistemas.tbcreditflow.origination.domain.Cliente;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Cliente;
 import edu.upc.sistemas.tbcreditflow.origination.domain.TipoDoc;
 import org.springframework.data.jpa.repository.JpaRepository;
 

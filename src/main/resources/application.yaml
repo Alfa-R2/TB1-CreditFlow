@@ -4,7 +4,7 @@ spring:
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/crediflow}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    password: ${DB_PASSWORD:admin}
   jpa:
     hibernate:
       ddl-auto: ${DDL_AUTO:update}
@@ -16,6 +16,11 @@ spring:
     multipart:
       max-file-size: 5MB
       max-request-size: 5MB
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+      enabled: true
 
 jwt:
   # HS256 requires a key of at least 256 bits (32 bytes). Override via env in production.

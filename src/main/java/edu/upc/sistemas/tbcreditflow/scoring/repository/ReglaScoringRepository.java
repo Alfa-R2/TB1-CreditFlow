@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.scoring.repository;
 
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ReglaScoring;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.entity.ReglaScoring;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

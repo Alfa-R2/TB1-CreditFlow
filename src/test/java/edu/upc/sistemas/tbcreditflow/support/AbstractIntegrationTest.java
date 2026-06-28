@@ -1,15 +1,15 @@
 package edu.upc.sistemas.tbcreditflow.support;
 
 import com.jayway.jsonpath.JsonPath;
-import edu.upc.sistemas.tbcreditflow.origination.domain.Cliente;
-import edu.upc.sistemas.tbcreditflow.origination.domain.Solicitud;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Cliente;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import edu.upc.sistemas.tbcreditflow.origination.domain.TipoDoc;
 import edu.upc.sistemas.tbcreditflow.origination.repository.ClienteRepository;
 import edu.upc.sistemas.tbcreditflow.origination.repository.SolicitudRepository;
 import edu.upc.sistemas.tbcreditflow.security.domain.EstadoUsuario;
-import edu.upc.sistemas.tbcreditflow.security.domain.Rol;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Rol;
 import edu.upc.sistemas.tbcreditflow.security.domain.RolNombre;
-import edu.upc.sistemas.tbcreditflow.security.domain.Usuario;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Usuario;
 import edu.upc.sistemas.tbcreditflow.security.repository.RolRepository;
 import edu.upc.sistemas.tbcreditflow.security.repository.UsuarioRepository;
 import edu.upc.sistemas.tbcreditflow.security.service.JwtService;

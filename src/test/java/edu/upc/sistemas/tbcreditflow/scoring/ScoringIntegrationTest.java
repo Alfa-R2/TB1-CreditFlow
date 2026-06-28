@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.scoring;
 
-import edu.upc.sistemas.tbcreditflow.origination.domain.Solicitud;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import edu.upc.sistemas.tbcreditflow.scoring.service.ScoringService;
 import edu.upc.sistemas.tbcreditflow.security.domain.RolNombre;
 import edu.upc.sistemas.tbcreditflow.support.AbstractIntegrationTest;

@@ -1,7 +1,7 @@
 package edu.upc.sistemas.tbcreditflow.scoring.controller;
 
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ReglaScoringRequest;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ReglaScoringResponse;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.dto.ReglaScoringRequest;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.dto.ReglaScoringResponse;
 import edu.upc.sistemas.tbcreditflow.scoring.service.ReglaScoringService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

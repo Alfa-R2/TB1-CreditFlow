@@ -1,9 +1,9 @@
 package edu.upc.sistemas.tbcreditflow.origination.service;
 
-import edu.upc.sistemas.tbcreditflow.common.BadRequestException;
+import edu.upc.sistemas.tbcreditflow.common.exception.BadRequestException;
 import edu.upc.sistemas.tbcreditflow.common.HashUtil;
-import edu.upc.sistemas.tbcreditflow.origination.domain.Documento;
-import edu.upc.sistemas.tbcreditflow.origination.domain.DocumentoResponse;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Documento;
+import edu.upc.sistemas.tbcreditflow.origination.domain.dto.DocumentoResponse;
 import edu.upc.sistemas.tbcreditflow.origination.domain.TipoDocumento;
 import edu.upc.sistemas.tbcreditflow.origination.repository.DocumentoRepository;
 import org.springframework.beans.factory.annotation.Value;

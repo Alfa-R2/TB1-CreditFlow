@@ -1,7 +1,7 @@
 package edu.upc.sistemas.tbcreditflow.audit;
 
 import edu.upc.sistemas.tbcreditflow.audit.domain.AccionAuditoria;
-import edu.upc.sistemas.tbcreditflow.audit.domain.RegistroAuditoria;
+import edu.upc.sistemas.tbcreditflow.audit.domain.entity.RegistroAuditoria;
 import edu.upc.sistemas.tbcreditflow.audit.service.AuditService;
 import edu.upc.sistemas.tbcreditflow.support.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;

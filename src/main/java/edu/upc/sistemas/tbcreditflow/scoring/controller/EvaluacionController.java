@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.scoring.controller;
 
-import edu.upc.sistemas.tbcreditflow.scoring.domain.EvaluacionResponse;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.dto.EvaluacionResponse;
 import edu.upc.sistemas.tbcreditflow.scoring.service.ScoringService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

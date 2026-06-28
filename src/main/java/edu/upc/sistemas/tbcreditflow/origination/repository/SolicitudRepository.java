@@ -1,7 +1,7 @@
 package edu.upc.sistemas.tbcreditflow.origination.repository;
 
 import edu.upc.sistemas.tbcreditflow.origination.domain.EstadoSolicitud;
-import edu.upc.sistemas.tbcreditflow.origination.domain.Solicitud;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

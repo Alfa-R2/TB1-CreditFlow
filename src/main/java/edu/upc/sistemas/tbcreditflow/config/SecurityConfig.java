@@ -51,6 +51,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Público
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                        // Documentación OpenAPI / Swagger UI (acceso libre en desarrollo)
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**",
+                                "/v3/api-docs", "/v3/api-docs/**", "/v3/api-docs.yaml").permitAll()
                         // Solicitudes / Documentos (ASESOR)
                         .requestMatchers(HttpMethod.POST, "/api/solicitudes").hasRole("ASESOR")
                         .requestMatchers(HttpMethod.GET, "/api/solicitudes").hasRole("ASESOR")

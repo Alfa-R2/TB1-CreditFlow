@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.scoring.repository;
 
-import edu.upc.sistemas.tbcreditflow.scoring.domain.EvaluacionRiesgo;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.entity.EvaluacionRiesgo;
 import edu.upc.sistemas.tbcreditflow.scoring.domain.NivelRiesgo;
 import org.springframework.data.jpa.repository.JpaRepository;
 

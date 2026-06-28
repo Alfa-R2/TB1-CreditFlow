@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.security;
 
-import edu.upc.sistemas.tbcreditflow.origination.domain.Solicitud;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import edu.upc.sistemas.tbcreditflow.security.domain.RolNombre;
 import edu.upc.sistemas.tbcreditflow.support.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;

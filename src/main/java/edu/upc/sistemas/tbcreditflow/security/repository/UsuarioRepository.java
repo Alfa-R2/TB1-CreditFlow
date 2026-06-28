@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.security.repository;
 
-import edu.upc.sistemas.tbcreditflow.security.domain.Usuario;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

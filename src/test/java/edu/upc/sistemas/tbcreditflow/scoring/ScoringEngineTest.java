@@ -2,8 +2,8 @@ package edu.upc.sistemas.tbcreditflow.scoring;
 
 import edu.upc.sistemas.tbcreditflow.scoring.domain.NivelRiesgo;
 import edu.upc.sistemas.tbcreditflow.scoring.domain.OperadorRegla;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ReglaScoring;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ResultadoEvaluacion;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.entity.ReglaScoring;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.dto.ResultadoEvaluacion;
 import edu.upc.sistemas.tbcreditflow.scoring.service.ScoringEngine;
 import org.junit.jupiter.api.Test;
 

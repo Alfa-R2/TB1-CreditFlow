@@ -1,7 +1,7 @@
 package edu.upc.sistemas.tbcreditflow.security.service;
 
-import edu.upc.sistemas.tbcreditflow.common.ResourceNotFoundException;
-import edu.upc.sistemas.tbcreditflow.security.domain.Usuario;
+import edu.upc.sistemas.tbcreditflow.common.exception.ResourceNotFoundException;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Usuario;
 import edu.upc.sistemas.tbcreditflow.security.repository.UsuarioRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

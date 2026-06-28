@@ -1,13 +1,13 @@
 package edu.upc.sistemas.tbcreditflow.config;
 
 import edu.upc.sistemas.tbcreditflow.scoring.domain.OperadorRegla;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ReglaScoring;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.entity.ReglaScoring;
 import edu.upc.sistemas.tbcreditflow.scoring.repository.ReglaScoringRepository;
 import edu.upc.sistemas.tbcreditflow.scoring.service.ScoringEngine;
 import edu.upc.sistemas.tbcreditflow.security.domain.EstadoUsuario;
-import edu.upc.sistemas.tbcreditflow.security.domain.Rol;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Rol;
 import edu.upc.sistemas.tbcreditflow.security.domain.RolNombre;
-import edu.upc.sistemas.tbcreditflow.security.domain.Usuario;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Usuario;
 import edu.upc.sistemas.tbcreditflow.security.repository.RolRepository;
 import edu.upc.sistemas.tbcreditflow.security.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;

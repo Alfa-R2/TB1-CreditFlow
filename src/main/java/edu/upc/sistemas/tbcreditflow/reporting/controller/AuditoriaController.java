@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.reporting.controller;
 
-import edu.upc.sistemas.tbcreditflow.audit.domain.RegistroAuditoriaResponse;
+import edu.upc.sistemas.tbcreditflow.audit.domain.dto.RegistroAuditoriaResponse;
 import edu.upc.sistemas.tbcreditflow.reporting.service.AuditoriaConsultaService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;

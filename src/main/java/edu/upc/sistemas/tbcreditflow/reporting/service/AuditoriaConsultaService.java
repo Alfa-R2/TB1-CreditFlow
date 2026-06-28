@@ -1,9 +1,9 @@
 package edu.upc.sistemas.tbcreditflow.reporting.service;
 
-import edu.upc.sistemas.tbcreditflow.audit.domain.RegistroAuditoria;
-import edu.upc.sistemas.tbcreditflow.audit.domain.RegistroAuditoriaResponse;
+import edu.upc.sistemas.tbcreditflow.audit.domain.entity.RegistroAuditoria;
+import edu.upc.sistemas.tbcreditflow.audit.domain.dto.RegistroAuditoriaResponse;
 import edu.upc.sistemas.tbcreditflow.audit.repository.RegistroAuditoriaRepository;
-import edu.upc.sistemas.tbcreditflow.origination.domain.Solicitud;
+import edu.upc.sistemas.tbcreditflow.origination.domain.entity.Solicitud;
 import edu.upc.sistemas.tbcreditflow.origination.repository.SolicitudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

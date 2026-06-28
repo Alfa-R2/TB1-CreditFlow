@@ -1,6 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.security.repository;
 
-import edu.upc.sistemas.tbcreditflow.security.domain.Rol;
+import edu.upc.sistemas.tbcreditflow.security.domain.entity.Rol;
 import edu.upc.sistemas.tbcreditflow.security.domain.RolNombre;
 import org.springframework.data.jpa.repository.JpaRepository;
 

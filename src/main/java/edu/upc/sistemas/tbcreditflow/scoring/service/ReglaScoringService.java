@@ -1,10 +1,10 @@
 package edu.upc.sistemas.tbcreditflow.scoring.service;
 
-import edu.upc.sistemas.tbcreditflow.common.BadRequestException;
-import edu.upc.sistemas.tbcreditflow.common.ResourceNotFoundException;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ReglaScoring;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ReglaScoringRequest;
-import edu.upc.sistemas.tbcreditflow.scoring.domain.ReglaScoringResponse;
+import edu.upc.sistemas.tbcreditflow.common.exception.BadRequestException;
+import edu.upc.sistemas.tbcreditflow.common.exception.ResourceNotFoundException;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.entity.ReglaScoring;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.dto.ReglaScoringRequest;
+import edu.upc.sistemas.tbcreditflow.scoring.domain.dto.ReglaScoringResponse;
 import edu.upc.sistemas.tbcreditflow.scoring.repository.ReglaScoringRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,11 +1,11 @@
 package edu.upc.sistemas.tbcreditflow.origination.controller;
 
-import edu.upc.sistemas.tbcreditflow.origination.domain.CrearSolicitudRequest;
-import edu.upc.sistemas.tbcreditflow.origination.domain.DecisionRequest;
-import edu.upc.sistemas.tbcreditflow.origination.domain.DocumentoResponse;
-import edu.upc.sistemas.tbcreditflow.origination.domain.EstadoResponse;
+import edu.upc.sistemas.tbcreditflow.origination.domain.dto.CrearSolicitudRequest;
+import edu.upc.sistemas.tbcreditflow.origination.domain.dto.DecisionRequest;
+import edu.upc.sistemas.tbcreditflow.origination.domain.dto.DocumentoResponse;
+import edu.upc.sistemas.tbcreditflow.origination.domain.dto.EstadoResponse;
 import edu.upc.sistemas.tbcreditflow.origination.domain.EstadoSolicitud;
-import edu.upc.sistemas.tbcreditflow.origination.domain.SolicitudResponse;
+import edu.upc.sistemas.tbcreditflow.origination.domain.dto.SolicitudResponse;
 import edu.upc.sistemas.tbcreditflow.origination.domain.TipoDocumento;
 import edu.upc.sistemas.tbcreditflow.origination.service.DocumentoService;
 import edu.upc.sistemas.tbcreditflow.origination.service.SolicitudService;
