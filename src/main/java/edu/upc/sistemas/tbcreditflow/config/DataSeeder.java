@@ -16,6 +16,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+
 
 /**
  * Bootstrap de datos iniciales (§4.8). Idempotente: solo inserta lo que falta.
@@ -25,9 +29,8 @@ import java.math.BigDecimal;
  */
 @Component
 public class DataSeeder implements CommandLineRunner {
-
-    private static final String ADMIN_USERNAME = "admin";
-    private static final String ADMIN_PASSWORD = "admin";
+    private static final List<String> usernames = Arrays.asList("asesor", "analista", "admin", "comite", "cumplimiento", "auditor", "gerente");
+    private static final String PASSWORD = "admin";
 
     private final RolRepository rolRepository;
     private final UsuarioRepository usuarioRepository;
@@ -48,7 +51,7 @@ public class DataSeeder implements CommandLineRunner {
     @Transactional
     public void run(String... args) {
         seedRoles();
-        seedAdmin();
+        seedInitialUsers();
         seedReglas();
     }
 
@@ -60,17 +63,22 @@ public class DataSeeder implements CommandLineRunner {
         }
     }
 
-    private void seedAdmin() {
-        if (usuarioRepository.existsByUsername(ADMIN_USERNAME)) {
-            return;
-        }
-        Rol rolAdmin = rolRepository.findByNombre(RolNombre.ADMIN_CREDITO)
-                .orElseThrow(() -> new IllegalStateException("Rol ADMIN_CREDITO no encontrado"));
-        usuarioRepository.save(new Usuario(
-                ADMIN_USERNAME,
-                passwordEncoder.encode(ADMIN_PASSWORD),
-                rolAdmin,
-                EstadoUsuario.ACTIVO));
+    private void seedInitialUsers() {
+        IntStream.range(0, usernames.size()).
+                forEach(i -> {
+                    String username = usernames.get(i);
+                    RolNombre rolNombre = RolNombre.values()[i];
+                    if (usuarioRepository.existsByUsername(username)) {
+                        return;
+                    }
+                    Rol rol = rolRepository.findByNombre(rolNombre)
+                            .orElseThrow(() -> new IllegalStateException("Rol " + rolNombre + " no encontrado"));
+                    usuarioRepository.save(new Usuario(
+                            username,
+                            passwordEncoder.encode(PASSWORD),
+                            rol,
+                            EstadoUsuario.ACTIVO));
+                });
     }
 
     private void seedReglas() {

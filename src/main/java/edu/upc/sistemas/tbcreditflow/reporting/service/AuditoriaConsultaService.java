@@ -37,7 +37,7 @@ public class AuditoriaConsultaService {
         LocalDateTime desdeInicio = desde == null ? null : desde.atStartOfDay();
         LocalDateTime hastaExclusivo = hasta == null ? null : hasta.plusDays(1).atStartOfDay();
 
-        List<RegistroAuditoria> registros = registroAuditoriaRepository.buscarPorRango(desdeInicio, hastaExclusivo);
+        List<RegistroAuditoria> registros = buscarPorRango(desdeInicio, hastaExclusivo);
 
         if (clienteId != null) {
             Set<Long> solicitudIds = solicitudRepository.buscar(null, clienteId).stream()
@@ -51,5 +51,19 @@ public class AuditoriaConsultaService {
         return registros.stream()
                 .map(RegistroAuditoriaResponse::from)
                 .toList();
+    }
+
+    private List<RegistroAuditoria> buscarPorRango(LocalDateTime desde, LocalDateTime hasta) {
+        if (desde != null && hasta != null) {
+            return registroAuditoriaRepository
+                    .findByFechaGreaterThanEqualAndFechaLessThanOrderByIdAsc(desde, hasta);
+        }
+        if (desde != null) {
+            return registroAuditoriaRepository.findByFechaGreaterThanEqualOrderByIdAsc(desde);
+        }
+        if (hasta != null) {
+            return registroAuditoriaRepository.findByFechaLessThanOrderByIdAsc(hasta);
+        }
+        return registroAuditoriaRepository.findAllByOrderByIdAsc();
     }
 }
