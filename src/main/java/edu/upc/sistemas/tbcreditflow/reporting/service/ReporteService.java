@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class ReporteService {
 
     private static final BigDecimal CERO_2 = new BigDecimal("0.00");
     private static final double MINUTOS_POR_DIA = 1440.0;
+    private static final ZoneId REPORT_TIME_ZONE = ZoneId.systemDefault();
 
     private final SolicitudRepository solicitudRepository;
     private final EvaluacionRiesgoRepository evaluacionRepository;
@@ -79,7 +81,10 @@ public class ReporteService {
             if (registro == null) {
                 continue;
             }
-            sumaDias += Duration.between(registro, decision.getFecha()).toMinutes() / MINUTOS_POR_DIA;
+            sumaDias += Duration.between(
+                    registro.atZone(REPORT_TIME_ZONE).toInstant(),
+                    decision.getFecha().atZone(REPORT_TIME_ZONE).toInstant()
+            ).toMinutes() / MINUTOS_POR_DIA;
             n++;
         }
         if (n == 0) {
