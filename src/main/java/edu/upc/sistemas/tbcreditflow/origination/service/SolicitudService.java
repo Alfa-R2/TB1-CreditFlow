@@ -76,7 +76,7 @@ public class SolicitudService {
                 break;
             case RUC:
                 if (!numDoc.matches("^[0-9]{11}$")) {
-                    throw new BadRequestException("El RUC debe 11 dígitos.");
+                    throw new BadRequestException("El RUC debe tener 11 dígitos.");
                 }
                 break;
             case CE:
