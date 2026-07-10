@@ -171,3 +171,4 @@ Long solicitudId + @Column   (solo en RegistroAuditoria)
 getCliente().getId()
   -> lee el id sin cargar la entidad relacionada (proxy LAZY)
 ```
+> **Nota de desarrollo (Actualización General del Cliente):** A diferencia del diseño original puramente inmutable, la entidad `Cliente` ahora expone métodos de acceso de escritura (`setters`). Esto permite que el método `obtenerOReutilizarCliente` en la capa de servicio actualice de forma general los datos del cliente (nombres, apellidos, ingresos y deudas) con la información más reciente enviada en la solicitud, evitando mantener registros desactualizados en el sistema.

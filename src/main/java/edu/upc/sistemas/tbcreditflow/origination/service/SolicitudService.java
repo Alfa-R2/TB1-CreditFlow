@@ -58,6 +58,15 @@ public class SolicitudService {
         validarFormatoDocumento(c.tipoDoc(), c.numDoc());
 
         return clienteRepository.findByTipoDocAndNumDoc(c.tipoDoc(), c.numDoc())
+                // En caso de que sea un cliente antiguo, actualiza sus nuevos datos
+                .map(clienteExistente -> {
+                    clienteExistente.setIngresoMensual(c.ingresoMensual());
+                    clienteExistente.setDeudasActuales(c.deudasActuales());
+                    clienteExistente.setNombres(c.nombres());
+                    clienteExistente.setApellidos(c.apellidos());
+
+                    return clienteRepository.save(clienteExistente);
+                })
                 .orElseGet(() -> clienteRepository.save(new Cliente(
                         c.tipoDoc(), c.numDoc(), c.nombres(), c.apellidos(),
                         c.ingresoMensual(), c.deudasActuales())));
