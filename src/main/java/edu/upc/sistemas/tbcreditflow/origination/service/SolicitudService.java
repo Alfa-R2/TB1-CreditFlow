@@ -48,6 +48,17 @@ public class SolicitudService {
     @Transactional
     public SolicitudResponse crear(CrearSolicitudRequest request) {
         Cliente cliente = obtenerOReutilizarCliente(request.cliente());
+
+        // Verificamos si el cliente existente ya tiene una solicitud activa (registrada o evaluada)
+        if (cliente.getId() != null) {
+            List<SolicitudResponse> activas = listar(EstadoSolicitud.REGISTRADA, cliente.getId());
+            List<SolicitudResponse> evaluadas = listar(EstadoSolicitud.EVALUADA, cliente.getId());
+
+            if (!activas.isEmpty() || !evaluadas.isEmpty()) {
+                throw new ConflictException("El cliente ya cuenta con una solicitud activa en proceso de evaluación.");
+            }
+        }
+
         Usuario asesor = usuarioService.currentUsuario();
         Solicitud solicitud = new Solicitud(
                 cliente, asesor, request.monto(), request.plazoMeses(), LocalDateTime.now());

@@ -264,7 +264,7 @@ tiene la dependencia:
 | `BadCredentialsException` | Login con credenciales invalidas.                                                             | `401` |
 | `AccessDeniedException` | Acceso denegado a nivel controller/metodo.                                                    | `403` |
 | `ResourceNotFoundException` | Recurso inexistente.                                                                          | `404` |
-| `ConflictException` | Conflicto de estado o accion invalida.                                                        | `409` |
+| `ConflictException` | Conflicto de estado (transición inválida) o intento de registrar una nueva solicitud teniendo un proceso activo en curso.                                                        | `409` |
 | `Exception` | Cualquier error no contemplado.                                                               | `500` |
 
 ## 8. Excepciones propias del proyecto
