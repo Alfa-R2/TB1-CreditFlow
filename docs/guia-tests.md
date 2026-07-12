@@ -329,13 +329,13 @@ El umbral actual es:
 ```xml
 <counter>LINE</counter>
 <value>COVEREDRATIO</value>
-<minimum>0.95</minimum>
+<minimum>0.94</minimum>
 ```
 
 Eso significa:
 
 ```text
-El build debe tener al menos 95% de lineas cubiertas.
+El build debe tener al menos 94% de lineas cubiertas.
 ```
 
 Reporte HTML:
