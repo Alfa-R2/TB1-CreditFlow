@@ -85,4 +85,32 @@ public class Cliente {
     public BigDecimal getDeudasActuales() {
         return deudasActuales;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTipoDoc(TipoDoc tipoDoc) {
+        this.tipoDoc = tipoDoc;
+    }
+
+    public void setNumDoc(String numDoc) {
+        this.numDoc = numDoc;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public void setIngresoMensual(BigDecimal ingresoMensual) {
+        this.ingresoMensual = ingresoMensual;
+    }
+
+    public void setDeudasActuales(BigDecimal deudasActuales) {
+        this.deudasActuales = deudasActuales;
+    }
 }

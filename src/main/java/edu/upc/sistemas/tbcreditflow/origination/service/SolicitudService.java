@@ -2,6 +2,7 @@ package edu.upc.sistemas.tbcreditflow.origination.service;
 
 import edu.upc.sistemas.tbcreditflow.audit.domain.AccionAuditoria;
 import edu.upc.sistemas.tbcreditflow.audit.service.AuditService;
+import edu.upc.sistemas.tbcreditflow.common.exception.BadRequestException;
 import edu.upc.sistemas.tbcreditflow.common.exception.ConflictException;
 import edu.upc.sistemas.tbcreditflow.common.exception.ResourceNotFoundException;
 import edu.upc.sistemas.tbcreditflow.origination.domain.AccionDecision;
@@ -47,6 +48,17 @@ public class SolicitudService {
     @Transactional
     public SolicitudResponse crear(CrearSolicitudRequest request) {
         Cliente cliente = obtenerOReutilizarCliente(request.cliente());
+
+        // Verificamos si el cliente existente ya tiene una solicitud activa (registrada o evaluada)
+        if (cliente.getId() != null) {
+            List<SolicitudResponse> activas = listar(EstadoSolicitud.REGISTRADA, cliente.getId());
+            List<SolicitudResponse> evaluadas = listar(EstadoSolicitud.EVALUADA, cliente.getId());
+
+            if (!activas.isEmpty() || !evaluadas.isEmpty()) {
+                throw new ConflictException("El cliente ya cuenta con una solicitud activa en proceso de evaluación.");
+            }
+        }
+
         Usuario asesor = usuarioService.currentUsuario();
         Solicitud solicitud = new Solicitud(
                 cliente, asesor, request.monto(), request.plazoMeses(), LocalDateTime.now());
@@ -54,10 +66,47 @@ public class SolicitudService {
     }
 
     private Cliente obtenerOReutilizarCliente(ClienteRequest c) {
+        validarFormatoDocumento(c.tipoDoc(), c.numDoc());
+
         return clienteRepository.findByTipoDocAndNumDoc(c.tipoDoc(), c.numDoc())
+                // En caso de que sea un cliente antiguo, actualiza sus nuevos datos
+                .map(clienteExistente -> {
+                    clienteExistente.setIngresoMensual(c.ingresoMensual());
+                    clienteExistente.setDeudasActuales(c.deudasActuales());
+                    clienteExistente.setNombres(c.nombres());
+                    clienteExistente.setApellidos(c.apellidos());
+
+                    return clienteRepository.save(clienteExistente);
+                })
                 .orElseGet(() -> clienteRepository.save(new Cliente(
                         c.tipoDoc(), c.numDoc(), c.nombres(), c.apellidos(),
                         c.ingresoMensual(), c.deudasActuales())));
+    }
+    /** Método para validar los digitos del documento según el tipo **/
+    private void validarFormatoDocumento(edu.upc.sistemas.tbcreditflow.origination.domain.TipoDoc tipoDoc, String numDoc) {
+        if (numDoc == null) {
+            throw new IllegalArgumentException("El número de documento no puede ser nulo.");
+        }
+
+        switch (tipoDoc) {
+            case DNI:
+                if (!numDoc.matches("^[0-9]{8}$")) {
+                    throw new BadRequestException("El DNI debe tener 8 dígitos.");
+                }
+                break;
+            case RUC:
+                if (!numDoc.matches("^[0-9]{11}$")) {
+                    throw new BadRequestException("El RUC debe tener 11 dígitos.");
+                }
+                break;
+            case CE:
+                if (numDoc.length() < 9 || numDoc.length() > 12) {
+                    throw new BadRequestException("El CE debe tener de 9 a 12 dígitos.");
+                }
+                break;
+            default:
+                throw new BadRequestException("Tipo de documento no soportado.");
+        }
     }
 
     @Transactional(readOnly = true)

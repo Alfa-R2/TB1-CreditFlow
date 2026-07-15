@@ -1,5 +1,6 @@
 package edu.upc.sistemas.tbcreditflow.origination;
 
+import edu.upc.sistemas.tbcreditflow.origination.domain.EstadoSolicitud;
 import edu.upc.sistemas.tbcreditflow.security.domain.RolNombre;
 import edu.upc.sistemas.tbcreditflow.support.AbstractIntegrationTest;
 import org.junit.jupiter.api.Test;
@@ -49,6 +50,21 @@ class SolicitudIntegrationTest extends AbstractIntegrationTest {
     }
 
     @Test
+    void cp09_registroDuplicado_409() throws Exception {
+        mockMvc.perform(post("/api/solicitudes")
+                        .header(HttpHeaders.AUTHORIZATION, bearer(RolNombre.ASESOR))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(SOLICITUD_VALIDA))
+                .andExpect(status().isCreated());
+        mockMvc.perform(post("/api/solicitudes")
+                        .header(HttpHeaders.AUTHORIZATION, bearer(RolNombre.ASESOR))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(SOLICITUD_VALIDA))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.status").value(409));
+    }
+
+    @Test
     void registroReutilizaClientePorDocumento() throws Exception {
         MvcResult primera = mockMvc.perform(post("/api/solicitudes")
                         .header(HttpHeaders.AUTHORIZATION, bearer(RolNombre.ASESOR))
@@ -56,6 +72,11 @@ class SolicitudIntegrationTest extends AbstractIntegrationTest {
                         .content(SOLICITUD_VALIDA))
                 .andExpect(status().isCreated())
                 .andReturn();
+        Number solicitudId = com.jayway.jsonpath.JsonPath.read(primera.getResponse().getContentAsString(), "$.id");
+        solicitudRepository.findById(solicitudId.longValue()).ifPresent(solicitud -> {
+            solicitud.setEstado(EstadoSolicitud.RECHAZADA);
+            solicitudRepository.save(solicitud);
+        });
         MvcResult segunda = mockMvc.perform(post("/api/solicitudes")
                         .header(HttpHeaders.AUTHORIZATION, bearer(RolNombre.ASESOR))
                         .contentType(MediaType.APPLICATION_JSON)

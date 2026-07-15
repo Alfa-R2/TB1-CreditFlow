@@ -376,16 +376,17 @@ Todos los endpoints y servicios deben tener control de excepciones (requisito de
 
 ## 9. Pruebas y cobertura
 
-| ID | Escenario | Tipo | Resultado esperado |
-|---|---|---|---|
-| CP01 | Registro con datos válidos | Integración | 201, estado REGISTRADA |
-| CP02 | Registro con datos incompletos | Excepción | 400 con mensaje de validación |
-| CP03 | Cálculo de capacidad de pago | Unitaria | capacidad correcta según ingreso/deudas |
+| ID   | Escenario | Tipo | Resultado esperado                        |
+|------|---|---|-------------------------------------------|
+| CP01 | Registro con datos válidos | Integración | 201, estado REGISTRADA                    |
+| CP02 | Registro con datos incompletos | Excepción | 400 con mensaje de validación             |
+| CP03 | Cálculo de capacidad de pago | Unitaria | capacidad correcta según ingreso/deudas   |
 | CP04 | Nivel de riesgo alto | Unitaria | score bajo (<40) ⇒ ALTO con justificación |
-| CP05 | Registro inmutable de aprobación | Integración | registro con hash; edición rechazada |
-| CP06 | Acceso no autorizado por rol | Seguridad | 403 |
-| CP07 | Consulta de historial | Funcional | lista filtrada por cliente y fechas |
-| CP08 | Cobertura de la suite | Automatizada | cobertura de líneas ≥ 80% (JaCoCo) |
+| CP05 | Registro inmutable de aprobación | Integración | registro con hash; edición rechazada      |
+| CP06 | Acceso no autorizado por rol | Seguridad | 403                                       |
+| CP07 | Consulta de historial | Funcional | lista filtrada por cliente y fechas       |
+| CP08 | Cobertura de la suite | Automatizada | cobertura de líneas ≥ 80% (JaCoCo)        |
+| CP09 | Intento de registro con solicitud activa | Integración | 409 con mensaje de conflicto              |
 
 **Metas:** cobertura backend **≥ 80%** (JaCoCo); 100% de CP de prioridad alta aprobados;
 0 bugs/vulnerabilidades críticas en SonarQube; control de excepciones en todos los endpoints.
@@ -403,13 +404,13 @@ Todos los endpoints y servicios deben tener control de excepciones (requisito de
 
 **Fase 1 — Sprint 1 (HU prioritarias)** en este orden:
 1. **HU12 Seguridad** (Usuario, Rol, JWT, login, bootstrap admin+roles). Habilita probar todo lo demás.
-2. **HU01 + HU03** (Cliente, Solicitud, validación, create-or-reuse). → CP01, CP02.
+2. **HU01 + HU03** (Cliente, Solicitud, validación, create-or-reuse). → CP01, CP02, CP09.
 3. **HU02** (Documento, upload, hash). 
 4. **HU05 + HU06** (EvaluacionRiesgo, capacidad, motor de reglas, reglas semilla). → CP03, CP04.
 5. **HU08** (decisión comité, transición de estado) — necesaria para disparar la auditoría.
 6. **HU09 + HU11** (RegistroAuditoria append-only + hash encadenado). → CP05.
 - **DoD Sprint 1:** flujo extremo a extremo registrar → evaluar → decidir → auditar funciona;
-  CP01–CP06 verdes; cobertura ≥ 80% del código de estos módulos.
+  CP01–CP06 y CP09 verdes; cobertura ≥ 80% del código de estos módulos.
 
 **Fase 2 — Resto**
 - **HU04** (consultar estado), **HU07** (CRUD reglas), **HU10** (consulta auditoría), **HU13** (indicadores). → CP07.
@@ -421,7 +422,11 @@ Todos los endpoints y servicios deben tener control de excepciones (requisito de
 
 ```bash
 # Base de datos (Docker)
-docker run --name crediflow-db -e POSTGRES_DB=crediflow -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d postgres
+docker run --name crediflow-db \
+  -e POSTGRES_DB=crediflow \
+  -e POSTGRES_PASSWORD=postgres \
+  -p 5432:5432 \
+  -d postgres:18.4-alpine
 
 # Build + pruebas + cobertura
 mvn clean verify           # ejecuta tests + JaCoCo (report en target/site/jacoco/index.html)
@@ -430,7 +435,7 @@ mvn clean verify           # ejecuta tests + JaCoCo (report en target/site/jacoc
 mvn spring-boot:run        # API en http://localhost:8080/api
 
 # Empaquetar imagen
-docker build -t crediflow .
+docker build -t crediflow-backend:1.0.0 .
 ```
 `application.yml` debe definir: datasource PostgreSQL, `jwt.secret`, `jwt.expiration`,
 `app.uploads.dir=./uploads`, `app.cors.allowed-origins`.
@@ -464,7 +469,7 @@ docker build -t crediflow .
 - [ ] Cuerpo de error uniforme (§7).
 
 ### Pruebas
-- [ ] CP01–CP08 implementados y verdes.
+- [ ] CP01–CP09 implementados y verdes.
 - [ ] `mvn verify` genera reporte JaCoCo con **cobertura ≥ 80%**.
 - [ ] SonarQube: 0 bugs/vulnerabilidades críticas.
 

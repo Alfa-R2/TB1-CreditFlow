@@ -253,19 +253,19 @@ tiene la dependencia:
 
 `GlobalExceptionHandler` traduce estas excepciones:
 
-| Excepcion | Cuando ocurre | HTTP |
-| --- | --- | --- |
-| `MethodArgumentNotValidException` | Falla `@Valid` sobre `@RequestBody`. | `400` |
-| `ConstraintViolationException` | Falla validacion sobre parametros, normalmente con `@Validated`. | `400` |
-| `HttpMessageNotReadableException` | JSON malformado, body ilegible o enum invalido. | `400` |
-| `MethodArgumentTypeMismatchException` | Parametro con tipo incorrecto, por ejemplo `id` no numerico. | `400` |
-| `BadRequestException` | Regla de negocio considera invalida la entrada. | `400` |
-| `MaxUploadSizeExceededException` | Archivo supera el maximo permitido. | `400` |
-| `BadCredentialsException` | Login con credenciales invalidas. | `401` |
-| `AccessDeniedException` | Acceso denegado a nivel controller/metodo. | `403` |
-| `ResourceNotFoundException` | Recurso inexistente. | `404` |
-| `ConflictException` | Conflicto de estado o accion invalida. | `409` |
-| `Exception` | Cualquier error no contemplado. | `500` |
+| Excepcion | Cuando ocurre                                                                                 | HTTP |
+| --- |-----------------------------------------------------------------------------------------------| --- |
+| `MethodArgumentNotValidException` | Falla `@Valid` sobre `@RequestBody`.                                                          | `400` |
+| `ConstraintViolationException` | Falla validacion sobre parametros, normalmente con `@Validated`.                              | `400` |
+| `HttpMessageNotReadableException` | JSON malformado, body ilegible o enum invalido.                                               | `400` |
+| `MethodArgumentTypeMismatchException` | Parametro con tipo incorrecto, por ejemplo `id` no numerico.                                  | `400` |
+| `BadRequestException` | Regla de negocio considera invalida la entrada (ingreso 0 / formato de documento según tipo). | `400` |
+| `MaxUploadSizeExceededException` | Archivo supera el maximo permitido.                                                           | `400` |
+| `BadCredentialsException` | Login con credenciales invalidas.                                                             | `401` |
+| `AccessDeniedException` | Acceso denegado a nivel controller/metodo.                                                    | `403` |
+| `ResourceNotFoundException` | Recurso inexistente.                                                                          | `404` |
+| `ConflictException` | Conflicto de estado (transición inválida) o intento de registrar una nueva solicitud teniendo un proceso activo en curso.                                                        | `409` |
+| `Exception` | Cualquier error no contemplado.                                                               | `500` |
 
 ## 8. Excepciones propias del proyecto
 
@@ -331,6 +331,7 @@ Sirve para reglas que requieren consultar estado o aplicar logica:
 la solicitud existe?
 esta en el estado correcto?
 el cliente ya existe?
+la longitud del número de documento es correcta según su tipo?
 hay datos suficientes para scoring?
 la transicion de estado es valida?
 ```

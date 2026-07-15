@@ -79,8 +79,11 @@ Requisitos: JDK 17+ (probado con 17 y 23) y Docker (para PostgreSQL). Se usa el 
 
 ```bash
 # 1) Base de datos PostgreSQL
-docker run --name crediflow-db -e POSTGRES_DB=crediflow -e POSTGRES_PASSWORD=postgres \
-  -p 5432:5432 -d postgres
+docker run --name crediflow-db \
+  -e POSTGRES_DB=crediflow \
+  -e POSTGRES_PASSWORD=postgres \
+  -p 5432:5432 \
+  -d postgres:18.4-alpine
 
 # 2) Build + pruebas + cobertura (reporte en target/site/jacoco/index.html)
 ./mvnw verify          # En Windows: .\mvnw.cmd verify
@@ -89,8 +92,11 @@ docker run --name crediflow-db -e POSTGRES_DB=crediflow -e POSTGRES_PASSWORD=pos
 ./mvnw spring-boot:run
 
 # 4) Empaquetar imagen Docker (build multi-stage) y ejecutarla
-docker build -t crediflow .
-docker run -p 8080:8080 -e DB_URL=jdbc:postgresql://host.docker.internal:5432/crediflow crediflow
+docker build -t crediflow-backend:1.0.0 .
+docker run --name crediflow-backend \
+  -p 8080:8080 \
+  -e DB_URL=jdbc:postgresql://host.docker.internal:5432/crediflow \
+  -d crediflow-backend:1.0.0
 ```
 
 Las pruebas usan **H2 en memoria** (perfil `test`), por lo que `./mvnw verify` **no** necesita
@@ -187,7 +193,7 @@ Roles: `ASESOR`, `ANALISTA`, `ADMIN_CREDITO`, `COMITE`, `CUMPLIMIENTO`, `AUDITOR
 
 - **52 pruebas** (unitarias + integración con MockMvc sobre H2).
 - Cobertura de líneas **≈ 95 %** (JaCoCo; *gate* ≥ 80 %, falla el build si no se cumple).
-- Casos CP01–CP08 cubiertos (registro, validación, capacidad, riesgo alto, auditoría inmutable,
+- Casos CP01–CP09 cubiertos (registro, validación, capacidad, riesgo alto, auditoría inmutable,
   acceso por rol, consulta de historial, cobertura).
 - CI: `.github/workflows/ci.yml` ejecuta `mvnw verify` en cada push/PR.
 

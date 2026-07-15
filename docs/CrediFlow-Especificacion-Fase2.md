@@ -32,7 +32,7 @@ Fase 2 = "Resto" del plan por fases del doc base (§10). Completa las 4 HU pendi
 | **HU10** | Consulta de auditoría (historial) | `GET /api/auditoria?clienteId=&desde=&hasta=` | AUDITOR, CUMPLIMIENTO |
 | **HU13** | Indicadores y tiempos | `GET /api/reportes/indicadores` | GERENTE |
 
-**DoD Fase 2 (del doc base):** las 13 HU operativas; CP01–CP08 verdes; cobertura ≥ 80%;
+**DoD Fase 2 (del doc base):** las 13 HU operativas; CP01–CP09 verdes; cobertura ≥ 80%;
 SonarQube sin críticos.
 
 ---
@@ -190,7 +190,7 @@ Filas que se hacen efectivas sobre la matriz del §6 del doc base (acceso indebi
 ### General
 - [ ] Las **13 HU** responden con los códigos del §7 del doc base.
 - [ ] Cuerpo de error uniforme en los nuevos endpoints.
-- [ ] `mvn verify` verde con **cobertura ≥ 80%** (JaCoCo); CP01–CP08 verdes.
+- [ ] `mvn verify` verde con **cobertura ≥ 80%** (JaCoCo); CP01–CP09 verdes.
 
 ---
 

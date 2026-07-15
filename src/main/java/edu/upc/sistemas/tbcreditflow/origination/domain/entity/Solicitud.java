@@ -93,4 +93,8 @@ public class Solicitud {
     public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
+
+    public void setEstado(EstadoSolicitud estado) {
+        this.estado = estado;
+    }
 }
